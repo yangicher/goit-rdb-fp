@@ -1,0 +1,16 @@
+DROP FUNCTION IF EXISTS calc_years_diff;
+
+DELIMITER //
+
+CREATE FUNCTION calc_years_diff(input_year INT)
+RETURNS INT
+DETERMINISTIC
+BEGIN
+  RETURN TIMESTAMPDIFF(YEAR, DATE(CONCAT(input_year, '-01-01')), CURRENT_DATE());
+END //
+
+DELIMITER ;
+
+SELECT id, year, calc_years_diff(year) AS years_passed
+FROM infectious_data
+LIMIT 10;

@@ -1,0 +1,14 @@
+SELECT 
+  e.entity_name, 
+  e.code,
+  COUNT(id.id) AS records,
+  ROUND(AVG(number_rabies), 2) AS avg_rabies,
+  MIN(number_rabies) AS min_rabies,
+  MAX(number_rabies) AS max_rabies,
+  SUM(number_rabies) AS sum_rabies
+FROM infectious_data id
+JOIN entities e ON id.entity_id = e.id
+WHERE number_rabies IS NOT NULL
+GROUP BY e.entity_name, e.code
+ORDER BY avg_rabies DESC
+LIMIT 10;
